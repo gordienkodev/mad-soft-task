@@ -1,1 +1,1 @@
-# mad-soft-task
+# React + TypeScript + Vite
