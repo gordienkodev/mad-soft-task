@@ -1,12 +1,35 @@
 import { Button, ConfigProvider, Flex, Radio, Space, Statistic } from 'antd';
 import './TestComponent.css';
 import type { CountdownProps, RadioChangeEvent } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 20;
 
+type QuestionType = 'single-choice';
+
+interface BaseQuestion {
+  id: string;
+  type: QuestionType;
+  question: string;
+  options: string[];
+  correctAnswer: string;
+}
+
+interface Test {
+  id: string;
+  title: string;
+  timeLimit: number;
+  questions: BaseQuestion[];
+}
+
 export const TestComponent = () => {
+  const [data, setData] = useState<Test | null>(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const onFinish: CountdownProps['onFinish'] = () => {
     console.log('finished!');
   };
@@ -19,6 +42,21 @@ export const TestComponent = () => {
     console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('./data.json');
+      const data = await response.json();
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.error('Ошибка при загрузке данных теста:', error);
+    }
+  };
+
+  if (!data) {
+    return <div>Загрузка теста...</div>;
+  }
 
   return (
     <>
@@ -80,46 +118,56 @@ export const TestComponent = () => {
         ></div>
       </Flex>
 
-      <Flex className="qa-row" gap="middle" align="start" justify="start" vertical>
-        <div>Что должен знать?</div>
-        <ConfigProvider
-          theme={{
-            components: {
-              Radio: {
-                colorBorder: '#000',
-                colorPrimary: '#B92A35',
-                colorBgContainer: '#fff',
-                dotSize: 0,
-              },
-            },
-          }}
+      {data.questions.map((question) => (
+        <Flex
+          className="qa-row"
+          gap="middle"
+          align="start"
+          justify="start"
+          vertical
+          key={question.id}
         >
-          <Radio.Group onChange={onChange} value={value}>
-            <Space direction="vertical">
-              <Radio value={1}>HTML</Radio>
-              <Radio value={2}>PHP</Radio>
-              <Radio value={3}>C</Radio>
-              <Radio value={4}>Букварь</Radio>
-            </Space>
-          </Radio.Group>
-        </ConfigProvider>
-        <ConfigProvider
-          theme={{
-            components: {
-              Button: {
-                colorBgContainer: '#B92A35',
-                colorText: '#fff',
-                colorPrimaryTextHover: '#ffffff',
-                colorPrimaryHover: '#ffffff',
-                colorPrimaryBorderHover: '#ffffff',
-                colorPrimaryActive: '#B92A35',
+          <div>{question.question}</div>
+          <ConfigProvider
+            theme={{
+              components: {
+                Radio: {
+                  colorBorder: '#000',
+                  colorPrimary: '#B92A35',
+                  colorBgContainer: '#fff',
+                  dotSize: 0,
+                },
               },
-            },
-          }}
-        >
-          <Button variant="solid">Ответить</Button>
-        </ConfigProvider>
-      </Flex>
+            }}
+          >
+            <Radio.Group>
+              <Space direction="vertical">
+                {question.options.map((option, index) => (
+                  <Radio key={index} value={option}>
+                    {option}
+                  </Radio>
+                ))}
+              </Space>
+            </Radio.Group>
+          </ConfigProvider>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  colorBgContainer: '#B92A35',
+                  colorText: '#fff',
+                  colorPrimaryTextHover: '#ffffff',
+                  colorPrimaryHover: '#ffffff',
+                  colorPrimaryBorderHover: '#ffffff',
+                  colorPrimaryActive: '#B92A35',
+                },
+              },
+            }}
+          >
+            <Button variant="solid">Ответить</Button>
+          </ConfigProvider>
+        </Flex>
+      ))}
     </>
   );
 };
