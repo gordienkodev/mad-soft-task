@@ -1,10 +1,10 @@
 import './App.css';
-import { DatePicker } from 'antd';
+import { TestComponent } from './components/TestComponent';
 
 function App() {
   return (
     <>
-      return <DatePicker />;
+      <TestComponent />
     </>
   );
 }
