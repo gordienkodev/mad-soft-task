@@ -1,9 +1,9 @@
-import { Button, ConfigProvider, Flex, Radio, Space, Statistic } from 'antd';
+import { Button, ConfigProvider, Flex, Radio, Space } from 'antd';
 import './TestComponent.css';
-import type { CountdownProps, RadioChangeEvent } from 'antd';
+import type { RadioChangeEvent } from 'antd';
 import { useEffect, useState } from 'react';
+import { CountdownTimer } from './CountdownTimer';
 
-const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 20;
 
 type QuestionType = 'single-choice';
@@ -31,7 +31,7 @@ export const TestComponent = () => {
     fetchData();
   }, []);
 
-  const onFinish: CountdownProps['onFinish'] = () => {
+  const onFinish = () => {
     console.log('finished!');
   };
 
@@ -72,7 +72,7 @@ export const TestComponent = () => {
     <>
       <Flex className="header-row" gap="middle" align="center" justify="start">
         <div>Тестирование</div>
-        <Countdown className="timer" format="mm:ss" value={deadline} onFinish={onFinish} />
+        <CountdownTimer deadline={deadline} onFinish={onFinish} />
       </Flex>
 
       <Flex className="progress-row" gap="small" align="center" justify="space-between">
