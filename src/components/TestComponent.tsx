@@ -25,6 +25,7 @@ interface Test {
 
 export const TestComponent = () => {
   const [data, setData] = useState<Test | null>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   useEffect(() => {
     fetchData();
@@ -33,8 +34,6 @@ export const TestComponent = () => {
   const onFinish: CountdownProps['onFinish'] = () => {
     console.log('finished!');
   };
-
-  let currentQuestion = 2;
 
   const [value, setValue] = useState(1);
 
@@ -54,9 +53,20 @@ export const TestComponent = () => {
     }
   };
 
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < (data?.questions.length || 0) - 1) {
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+    } else {
+      setCurrentQuestionIndex(0);
+    }
+  };
+
   if (!data) {
     return <div>Загрузка теста...</div>;
   }
+
+  const question = data.questions[currentQuestionIndex];
 
   return (
     <>
@@ -65,109 +75,72 @@ export const TestComponent = () => {
         <Countdown className="timer" format="mm:ss" value={deadline} onFinish={onFinish} />
       </Flex>
 
-      <Flex className="progress-row" gap="middle" align="center" justify="space-between">
-        <div
-          key={0}
-          className={`question-block ${
-            1 < currentQuestion
-              ? 'question-block-left'
-              : 1 === currentQuestion
-                ? 'question-block-active'
-                : 'question-block-right'
-          }`}
-        ></div>
-        <div
-          key={1}
-          className={`question-block ${
-            1 < currentQuestion
-              ? 'question-block-left'
-              : 1 === currentQuestion
-                ? 'question-block-active'
-                : 'question-block-right'
-          }`}
-        ></div>
-        <div
-          key={2}
-          className={`question-block ${
-            2 < currentQuestion
-              ? 'question-block-left'
-              : 2 === currentQuestion
-                ? 'question-block-active'
-                : 'question-block-right'
-          }`}
-        ></div>
-        <div
-          key={3}
-          className={`question-block ${
-            3 < currentQuestion
-              ? 'question-block-left'
-              : 3 === currentQuestion
-                ? 'question-block-active'
-                : 'question-block-right'
-          }`}
-        ></div>
-        <div
-          key={4}
-          className={`question-block ${
-            4 < currentQuestion
-              ? 'question-block-left'
-              : 4 === currentQuestion
-                ? 'question-block-active'
-                : 'question-block-right'
-          }`}
-        ></div>
+      <Flex className="progress-row" gap="small" align="center" justify="space-between">
+        {data.questions.map((_, index) => (
+          <div
+            key={index}
+            className={`question-block ${
+              index < currentQuestionIndex
+                ? 'question-block-left'
+                : index === currentQuestionIndex
+                  ? 'question-block-active'
+                  : 'question-block-right'
+            }`}
+          ></div>
+        ))}
       </Flex>
 
-      {data.questions.map((question) => (
-        <Flex
-          className="qa-row"
-          gap="middle"
-          align="start"
-          justify="start"
-          vertical
-          key={question.id}
+      <Flex
+        className="qa-row"
+        gap="middle"
+        align="start"
+        justify="start"
+        vertical
+        key={question.id}
+      >
+        <div>{question.question}</div>
+        <ConfigProvider
+          theme={{
+            components: {
+              Radio: {
+                colorBorder: '#000',
+                colorPrimary: '#B92A35',
+                colorBgContainer: '#fff',
+                dotSize: 0,
+              },
+            },
+          }}
         >
-          <div>{question.question}</div>
-          <ConfigProvider
-            theme={{
-              components: {
-                Radio: {
-                  colorBorder: '#000',
-                  colorPrimary: '#B92A35',
-                  colorBgContainer: '#fff',
-                  dotSize: 0,
-                },
+          <Radio.Group onChange={onChange} value={value}>
+            <Space direction="vertical">
+              {question.options.map((option, index) => (
+                <Radio key={index} value={option}>
+                  {option}
+                </Radio>
+              ))}
+            </Space>
+          </Radio.Group>
+        </ConfigProvider>
+
+        <ConfigProvider
+          theme={{
+            components: {
+              Button: {
+                colorBgContainer: '#B92A35',
+                colorText: '#fff',
+                colorPrimaryTextHover: '#ffffff',
+                colorPrimaryHover: '#ffffff',
+                colorPrimaryBorderHover: '#ffffff',
+                colorPrimaryActive: '#B92A35',
               },
-            }}
-          >
-            <Radio.Group>
-              <Space direction="vertical">
-                {question.options.map((option, index) => (
-                  <Radio key={index} value={option}>
-                    {option}
-                  </Radio>
-                ))}
-              </Space>
-            </Radio.Group>
-          </ConfigProvider>
-          <ConfigProvider
-            theme={{
-              components: {
-                Button: {
-                  colorBgContainer: '#B92A35',
-                  colorText: '#fff',
-                  colorPrimaryTextHover: '#ffffff',
-                  colorPrimaryHover: '#ffffff',
-                  colorPrimaryBorderHover: '#ffffff',
-                  colorPrimaryActive: '#B92A35',
-                },
-              },
-            }}
-          >
-            <Button variant="solid">Ответить</Button>
-          </ConfigProvider>
-        </Flex>
-      ))}
+            },
+          }}
+        >
+          <Button variant="solid" onClick={handleNextQuestion} disabled={!value}>
+            Ответить
+          </Button>
+        </ConfigProvider>
+      </Flex>
     </>
   );
 };
