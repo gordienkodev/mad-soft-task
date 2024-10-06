@@ -1,5 +1,6 @@
 import { Statistic } from 'antd';
 import type { CountdownProps } from 'antd';
+import './CountdownTimer.css';
 
 const { Countdown } = Statistic;
 

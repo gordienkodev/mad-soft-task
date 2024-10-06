@@ -1,0 +1,18 @@
+.progress-row {
+    background-color: blanchedalmond;
+}
+
+.question-block-left {
+    background-color: black;
+    color: white;
+}
+
+.question-block-active {
+    background-color: red;
+    color: white;
+}
+
+.question-block-right {
+    background-color: rgb(187, 185, 185);
+    color: white;
+}
