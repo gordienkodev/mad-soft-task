@@ -1,8 +1,9 @@
 import { Button, ConfigProvider, Flex, Radio, Space } from 'antd';
-import './TestComponent.css';
 import type { RadioChangeEvent } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CountdownTimer } from './CountdownTimer';
+import { TestDataLoader } from './TestDataLoader';
+import './TestComponent.css';
 
 const deadline = Date.now() + 1000 * 60 * 20;
 
@@ -27,10 +28,6 @@ export const TestComponent = () => {
   const [data, setData] = useState<Test | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const onFinish = () => {
     console.log('finished!');
   };
@@ -40,17 +37,6 @@ export const TestComponent = () => {
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setValue(e.target.value);
-  };
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch('./data.json');
-      const data = await response.json();
-      setData(data);
-      console.log(data);
-    } catch (error) {
-      console.error('Ошибка при загрузке данных теста:', error);
-    }
   };
 
   const handleNextQuestion = () => {
@@ -63,7 +49,7 @@ export const TestComponent = () => {
   };
 
   if (!data) {
-    return <div>Загрузка теста...</div>;
+    return <TestDataLoader onDataLoad={setData} />;
   }
 
   const question = data.questions[currentQuestionIndex];
