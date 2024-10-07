@@ -4,7 +4,7 @@ import { RadioChangeEvent } from 'antd/es/radio';
 interface SingleChoiceQuestionProps {
   question: {
     question: string;
-    options: string[];
+    options?: string[];
   };
   value: string;
   onChange: (value: string) => void;
@@ -36,11 +36,11 @@ export const SingleChoiceQuestion: React.FC<SingleChoiceQuestionProps> = ({
       >
         <Radio.Group onChange={handleChange} value={value}>
           <Space direction="vertical">
-            {question.options.map((option, index) => (
+            {question.options?.map((option, index) => (
               <Radio key={index} value={option}>
                 {option}
               </Radio>
-            ))}
+            )) || <div>No options available</div>}
           </Space>
         </Radio.Group>
       </ConfigProvider>

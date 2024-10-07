@@ -20,6 +20,17 @@
       "type": "single-choice",
       "question": "Какое значение display по умолчанию у элемента <div>?",
       "options": ["inline", "block", "inline-block", "none", "block-none"]
+    },
+    {
+      "id": "q4",
+      "type": "short-answer",
+      "question": "Как называется объект, который содержит текущую иерархию DOM на веб-странице?"
+    },
+    {
+      "id": "q10",
+      "type": "long-answer",
+      "question": "Объясните, как работает цикл событий (event loop) в JavaScript и его роль в обработке асинхронных операций.",
+      "correctAnswer": null
     }
   ]
 }
