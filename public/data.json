@@ -7,57 +7,19 @@
       "id": "q1",
       "type": "single-choice",
       "question": "Какой JavaScript-фреймворк в основном поддерживается Facebook?",
-      "options": ["Angular", "Vue", "React", "Svelte"],
-      "correctAnswer": "React"
+      "options": ["Angular", "Vue", "React", "Svelte"]
     },
     {
       "id": "q2",
-      "type": "single-choice",
+      "type": "multiple-choice",
       "question": "Какое свойство CSS используется для изменения цвета текста элемента?",
-      "options": ["color", "background-color", "font-size", "text-align"],
-      "correctAnswer": "color"
+      "options": ["color", "background-color", "font-size", "text-align"]
     },
     {
       "id": "q3",
       "type": "single-choice",
       "question": "Какое значение display по умолчанию у элемента <div>?",
-      "options": ["inline", "block", "inline-block", "none"],
-      "correctAnswer": "block"
-    },
-    {
-      "id": "q4",
-      "type": "single-choice",
-      "question": "Какой JavaScript-фреймворк в основном поддерживается Facebook?",
-      "options": ["Angular", "Vue", "React", "Svelte"],
-      "correctAnswer": "React"
-    },
-    {
-      "id": "q5",
-      "type": "single-choice",
-      "question": "Какое свойство CSS используется для изменения цвета текста элемента?",
-      "options": ["color", "background-color", "font-size", "text-align"],
-      "correctAnswer": "color"
-    },
-    {
-      "id": "q6",
-      "type": "single-choice",
-      "question": "Какое значение display по умолчанию у элемента <div>?",
-      "options": ["inline", "block", "inline-block", "none"],
-      "correctAnswer": "block"
-    },
-    {
-      "id": "q7",
-      "type": "single-choice",
-      "question": "Какое свойство CSS используется для изменения цвета текста элемента?",
-      "options": ["color", "background-color", "font-size", "text-align"],
-      "correctAnswer": "color"
-    },
-    {
-      "id": "q8",
-      "type": "single-choice",
-      "question": "Какое значение display по умолчанию у элемента <div>?",
-      "options": ["inline", "block", "inline-block", "none"],
-      "correctAnswer": "block"
+      "options": ["inline", "block", "inline-block", "none", "block-none"]
     }
   ]
 }

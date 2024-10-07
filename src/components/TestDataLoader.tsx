@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Spin } from 'antd';
 
 type QuestionType = 'single-choice';
 
@@ -28,7 +29,7 @@ export const TestDataLoader = ({ onDataLoad }: TestDataLoaderProps) => {
     const fetchData = async () => {
       try {
         const response = await fetch('./data.json');
-        const data = await response.json();
+        const data: Test = await response.json();
         onDataLoad(data);
       } catch (error) {
         console.error('Ошибка при загрузке данных теста:', error);
@@ -42,7 +43,11 @@ export const TestDataLoader = ({ onDataLoad }: TestDataLoaderProps) => {
   }, [onDataLoad]);
 
   if (loading) {
-    return <div>Загрузка теста...</div>;
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
   }
 
   return null;

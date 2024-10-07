@@ -1,15 +1,13 @@
 import { Flex } from 'antd';
-import type { RadioChangeEvent } from 'antd';
 import { useState } from 'react';
 import { CountdownTimer } from '../CountdownTimer/CountdownTimer';
 import { TestDataLoader } from '../TestDataLoader';
 import { CurrentQuestion } from '../CurrentQuestion/CurrentQuestion';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
-import './TestComponent.css';
 
 const deadline = Date.now() + 1000 * 60 * 20;
 
-type QuestionType = 'single-choice';
+type QuestionType = 'single-choice' | 'multiple-choice';
 
 interface BaseQuestion {
   id: string;
@@ -29,48 +27,58 @@ interface Test {
 export const TestComponent = () => {
   const [data, setData] = useState<Test | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string | string[] }>({});
 
   const onFinish = () => {
     console.log('finished!');
   };
 
-  const [value, setValue] = useState(1);
-
-  const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
-    setValue(e.target.value);
+  const onChange = (value: string | string[]) => {
+    const questionId = data?.questions[currentQuestionIndex].id;
+    if (questionId) {
+      setSelectedAnswers((prev) => ({
+        ...prev,
+        [questionId]: value,
+      }));
+      console.log('Selected answers:', { ...selectedAnswers, [questionId]: value });
+    }
   };
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < (data?.questions.length || 0) - 1) {
-      const nextIndex = currentQuestionIndex + 1;
-      setCurrentQuestionIndex(nextIndex);
+      setCurrentQuestionIndex((prev) => prev + 1);
     } else {
       setCurrentQuestionIndex(0);
     }
   };
 
-  if (!data) {
-    return <TestDataLoader onDataLoad={setData} />;
-  }
-
-  const question = data.questions[currentQuestionIndex];
+  const handleDataLoad = (loadedData: Test | null) => {
+    setData(loadedData);
+    setCurrentQuestionIndex(0);
+    setSelectedAnswers({});
+  };
 
   return (
     <>
-      <Flex className="header-row" gap="middle" align="center" justify="start">
-        <div>Тестирование</div>
-        <CountdownTimer deadline={deadline} onFinish={onFinish} />
-      </Flex>
+      {!data ? (
+        <TestDataLoader onDataLoad={handleDataLoad} />
+      ) : (
+        <>
+          <Flex className="header-row" gap="middle" align="center" justify="start">
+            <div>Тестирование</div>
+            <CountdownTimer deadline={deadline} onFinish={onFinish} />
+          </Flex>
 
-      <ProgressBar questions={data.questions} currentQuestionIndex={currentQuestionIndex} />
+          <ProgressBar questions={data.questions} currentQuestionIndex={currentQuestionIndex} />
 
-      <CurrentQuestion
-        question={question}
-        value={value}
-        onChange={onChange}
-        handleNextQuestion={handleNextQuestion}
-      />
+          <CurrentQuestion
+            question={data.questions[currentQuestionIndex]}
+            value={(selectedAnswers[data.questions[currentQuestionIndex].id] as string[]) ?? []}
+            onChange={onChange} 
+            handleNextQuestion={handleNextQuestion}
+          />
+        </>
+      )}
     </>
   );
 };

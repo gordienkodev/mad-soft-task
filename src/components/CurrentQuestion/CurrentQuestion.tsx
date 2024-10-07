@@ -1,16 +1,18 @@
-import { Button, ConfigProvider, Radio, Space } from 'antd';
-import type { RadioChangeEvent } from 'antd';
 import { Flex } from 'antd';
 import './CurrentQuestion.css';
+import { SubmitButton } from '../SubmitButton/SubmitButton';
+import { SingleChoiceQuestion } from '../Questions/SingleChoiceQuestion';
+import { MultipleChoiceQuestion } from '../Questions/MultipleChoiceQuestion';
 
 interface CurrentQuestionProps {
   question: {
     id: string;
+    type: 'single-choice' | 'multiple-choice';
     question: string;
     options: string[];
   };
-  value: any;
-  onChange: (e: RadioChangeEvent) => void;
+  value: string | string[];
+  onChange: (value: string | string[]) => void;
   handleNextQuestion: () => void;
 }
 
@@ -20,50 +22,33 @@ export const CurrentQuestion: React.FC<CurrentQuestionProps> = ({
   onChange,
   handleNextQuestion,
 }) => {
+  const renderQuestion = () => {
+    switch (question.type) {
+      case 'single-choice':
+        return (
+          <SingleChoiceQuestion
+            question={question}
+            value={value as string}
+            onChange={(selectedValue) => onChange(selectedValue)}
+          />
+        );
+      case 'multiple-choice':
+        return (
+          <MultipleChoiceQuestion
+            question={question}
+            value={value as string[]}
+            onChange={(selectedValues) => onChange(selectedValues)}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Flex className="qa-row" gap="middle" align="start" justify="start" vertical key={question.id}>
-      <div>{question.question}</div>
-      <ConfigProvider
-        theme={{
-          components: {
-            Radio: {
-              colorBorder: '#000',
-              colorPrimary: '#B92A35',
-              colorBgContainer: '#fff',
-              dotSize: 0,
-            },
-          },
-        }}
-      >
-        <Radio.Group onChange={onChange} value={value}>
-          <Space direction="vertical">
-            {question.options.map((option, index) => (
-              <Radio key={index} value={option}>
-                {option}
-              </Radio>
-            ))}
-          </Space>
-        </Radio.Group>
-      </ConfigProvider>
-
-      <ConfigProvider
-        theme={{
-          components: {
-            Button: {
-              colorBgContainer: '#B92A35',
-              colorText: '#fff',
-              colorPrimaryTextHover: '#ffffff',
-              colorPrimaryHover: '#ffffff',
-              colorPrimaryBorderHover: '#ffffff',
-              colorPrimaryActive: '#B92A35',
-            },
-          },
-        }}
-      >
-        <Button variant="solid" onClick={handleNextQuestion} disabled={!value}>
-          Ответить
-        </Button>
-      </ConfigProvider>
+      {renderQuestion()}
+      <SubmitButton onClick={handleNextQuestion} />
     </Flex>
   );
 };
