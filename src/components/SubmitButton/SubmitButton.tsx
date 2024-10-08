@@ -16,11 +16,12 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({ onClick }) => {
             colorPrimaryHover: '#ffffff',
             colorPrimaryBorderHover: '#ffffff',
             colorPrimaryActive: '#B92A35',
+            padding: 1,
           },
         },
       }}
     >
-      <Button variant="solid" onClick={onClick}>
+      <Button variant="solid" size="large" style={{ padding: '0 30px' }} onClick={onClick}>
         Ответить
       </Button>
     </ConfigProvider>

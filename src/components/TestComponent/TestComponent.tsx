@@ -5,6 +5,7 @@ import { TestDataLoader } from '../TestDataLoader';
 import { CurrentQuestion } from '../CurrentQuestion/CurrentQuestion';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
 import { DeadlineTimerManager } from '../DeadlineTimerManager';
+import Title from 'antd/es/typography/Title';
 
 type QuestionType = 'single-choice' | 'multiple-choice' | 'short-answer' | 'long-answer';
 
@@ -65,9 +66,9 @@ export const TestComponent = () => {
       {!data ? (
         <TestDataLoader onDataLoad={handleDataLoad} />
       ) : (
-        <>
+        <Flex gap="middle" vertical>
           <Flex className="header-row" gap="middle" align="center" justify="start">
-            <div>Тестирование</div>
+            <Title level={2}>Тестирование</Title>
             {deadline > 0 && <CountdownTimer deadline={deadline} onFinish={onFinish} />}
           </Flex>
 
@@ -79,7 +80,7 @@ export const TestComponent = () => {
             onChange={onChange}
             handleNextQuestion={handleNextQuestion}
           />
-        </>
+        </Flex>
       )}
     </>
   );

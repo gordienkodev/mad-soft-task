@@ -7,6 +7,7 @@ import { ShortAnswerQuestion } from '../Questions/ShortAnswerQuestion';
 import { LongAnswerQuestion } from '../Questions/LongAnswerQuestion';
 import { loadAnswerById, saveAnswerToStorage } from '../../utils/answerStorageService';
 import './CurrentQuestion.css';
+import Title from 'antd/es/typography/Title';
 
 interface CurrentQuestionProps {
   question: {
@@ -90,7 +91,7 @@ export const CurrentQuestion: React.FC<CurrentQuestionProps> = ({
 
   return (
     <Flex className="qa-row" gap="middle" align="start" justify="start" vertical key={question.id}>
-      {renderQuestion()}
+      <Title level={3}>{renderQuestion()}</Title>
       <SubmitButton onClick={handleSaveAnswer} />
     </Flex>
   );
