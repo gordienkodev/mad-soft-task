@@ -1,0 +1,9 @@
+.question-block {
+    flex-grow: 1;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}

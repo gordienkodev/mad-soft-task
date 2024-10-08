@@ -1,0 +1,62 @@
+{
+  "id": "frontend-test-js",
+  "title": "Тест на фронтенд-разработчика по JavaScript",
+  "timeLimit": 30,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "question": "Какой метод используется для добавления элемента в конец массива в JavaScript?",
+      "options": ["push()", "pop()", "shift()", "unshift()"]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "question": "Какие из следующих типов данных являются примитивными в JavaScript?",
+      "options": ["String", "Number", "Object", "Boolean"]
+    },
+    {
+      "id": "q3",
+      "type": "short-answer",
+      "question": "Как называется оператор, который используется для проверки на равенство значений и типов в JavaScript?"
+    },
+    {
+      "id": "q4",
+      "type": "long-answer",
+      "question": "Опишите разницу между `let`, `const` и `var` в JavaScript."
+    },
+    {
+      "id": "q5",
+      "type": "single-choice",
+      "question": "Какой метод позволяет преобразовать строку в массив символов?",
+      "options": ["split()", "join()", "slice()", "substring()"]
+    },
+    {
+      "id": "q6",
+      "type": "short-answer",
+      "question": "Какой метод используется для удаления последнего элемента из массива в JavaScript?"
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "question": "Какие из следующих методов являются методами массива в JavaScript?",
+      "options": ["forEach()", "map()", "filter()", "toString()"]
+    },
+    {
+      "id": "q8",
+      "type": "single-choice",
+      "question": "Что вернет следующий код: `typeof null`?",
+      "options": ["object", "null", "undefined", "number"]
+    },
+    {
+      "id": "q9",
+      "type": "short-answer",
+      "question": "Какой метод используется для создания новой функции, которая вызывает функцию с указанным значением `this`?"
+    },
+    {
+      "id": "q10",
+      "type": "long-answer",
+      "question": "Объясните, как работает `Promise` в JavaScript и приведите пример его использования."
+    }
+  ]
+}
