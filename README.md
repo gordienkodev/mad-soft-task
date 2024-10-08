@@ -1,4 +1,4 @@
-# SPA
+# Knowledge testing system
 
 As part of the project for an educational institution, a client-side information system was developed to assess students' knowledge through testing. The application was built using React with TypeScript, supporting various question types, including single-choice, multiple-choice, short answer, and essay questions. A time limit feature for test completion was also implemented.
 To ensure progress is saved, the application includes logic to restore the test state after page reloads. The architecture is designed to accommodate the addition of new question types in the future, providing flexibility. The interface is designed as a step-by-step form, enhancing user experience.
