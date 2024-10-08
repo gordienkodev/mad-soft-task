@@ -6,7 +6,7 @@ import { CurrentQuestion } from '../CurrentQuestion/CurrentQuestion';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
 import { DeadlineTimerManager } from '../DeadlineTimerManager';
 
-type QuestionType = 'single-choice' | 'multiple-choice' | 'short-answer';
+type QuestionType = 'single-choice' | 'multiple-choice' | 'short-answer' | 'long-answer';
 
 interface BaseQuestion {
   id: string;
