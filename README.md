@@ -12,7 +12,7 @@ Deploy: [https://mad-soft-task.vercel.app/](https://mad-soft-task.vercel.app/)
 ## Setup and Running
 
 - Use `node 21.x` or higher.
-- Clone this repo: `$ git clone [https://github.com/guz86/mad-soft-task.git)`.
+- Clone this repo: `$ git clone [https://github.com/gordienkodev/mad-soft-task.git)`.
 - Install dependencies: `$ npm install`.
 - Start server: `$ npm run dev`.
 - Now you can see web application to the address: `http://localhost:5173/`.
